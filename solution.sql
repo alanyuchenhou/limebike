@@ -12,6 +12,7 @@ GROUP BY
   bike_id
 ORDER BY
   user_count;
+
 -- - Rank bikes by how heavily they are used for June 2017, by trip count
 SELECT
   bike_id,
@@ -25,6 +26,7 @@ GROUP BY
   bike_id
 ORDER BY
   trip_count;
+
 -- - Calculate per region aggregated usage stats on a specific promotion named 'TestPromo'.
 -- - How many users, how many trips for each region.
 -- - And how many percentage of the usage are in the first day of the promotion.
@@ -85,6 +87,7 @@ FROM
       promotion_trips.region_id
   )
   AS usage_stats;
+
 -- Data transformation
 -- - Generate a table to store for each user, what is his/her last used bike, and what is his/her last used coupon
 SELECT
@@ -135,6 +138,7 @@ FROM
         coupon_id IS NOT NULL
     )
     AS last_coupons USING (user_id);
+
 -- - From trips and users, generate a user daily spent table that has following columns: date,
 -- - user_id, begin_balance, spent_amount_cents, num_trips. spent_amount_cents is the
 -- - sum of cost_amount_cents for all the trips for the user that day. You can assume all the
@@ -150,6 +154,7 @@ FROM
 GROUP BY
   created_at,
   user_id;
+
 -- Integrated problem solving
 -- - Generate a per region revenue report for each region for June 2017. Please write SQL
 -- - query to answer how much is gross revenue (sum of all trips completed in that month by
@@ -172,6 +177,7 @@ WHERE
   AND trips.created_at < '2017-07-01 00:00:00'
 GROUP BY
   trips.region_id;
+
 -- - Score effectiveness of promotions. Please define a few metrics that you think is
 -- - important to determine the effectiveness of promotions, and explain what exactly do they
 -- - mean and why they are important. And then write query to generate the metrics per promotion.
@@ -183,15 +189,17 @@ SELECT
 FROM
   coupons
 GROUP BY
-  promotion_id 	-- - Cohort analysis on users churn rate. Please define a cohort, and write queries to
-  -- - generate the data to show how active this cohort is over a given period of time
-  -- - I can define a cohort by aggregated user attributes,
-  -- - such as login counts, total money spent, total time spent, total distance traveled.
-  -- - However, these hand engineered features will take lot of time to define and optimize.
-  -- - A better approach is to apply deep learning and use entity embedding technique to do user embedding
-  -- - and they apply unsupervised machine learning techniques such as clustering to achieve user segmentation.
-  -- - I can't do these things using SQL.
-  -- - But I can do them using Python and its machine learning packages including Tensorflow, pandas, sklearn.
-  -- - To find out more, check out this movie embedding visualization I did for one of my project:
-  -- - https://github.com/alanyuchenhou/elephant/issues/38#issuecomment-350517247
-  -- - If you can see the potential contribution I can make to LimeBike, let's move forward and discuss more!
+  promotion_id
+
+-- - Cohort analysis on users churn rate. Please define a cohort, and write queries to
+-- - generate the data to show how active this cohort is over a given period of time
+-- - I can define a cohort by aggregated user attributes,
+-- - such as login counts, total money spent, total time spent, total distance traveled.
+-- - However, these hand engineered features will take lot of time to define and optimize.
+-- - A better approach is to apply deep learning and use entity embedding technique to do user embedding
+-- - and they apply unsupervised machine learning techniques such as clustering to achieve user segmentation.
+-- - I can't do these things using SQL.
+-- - But I can do them using Python and its machine learning packages including Tensorflow, pandas, sklearn.
+-- - To find out more, check out this movie embedding visualization I did for one of my project:
+-- - https://github.com/alanyuchenhou/elephant/issues/38#issuecomment-350517247
+-- - If you can see the potential contribution I can make to LimeBike, let's move forward and discuss more!
